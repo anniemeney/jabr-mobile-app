@@ -11,7 +11,7 @@ workflows:
           npm install
       - name: Build web app
         script: |
-          npx vite build
+          NODE_ENV=production npx vite build
       - name: Sync iOS
         script: |
           npx cap sync ios
