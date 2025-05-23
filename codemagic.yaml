@@ -11,7 +11,7 @@ workflows:
           npm install
       - name: Build web app
         script: |
-          npm run build --verbose
+          npx vite build
       - name: Sync iOS
         script: |
           npx cap sync ios
