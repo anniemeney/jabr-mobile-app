@@ -5,20 +5,23 @@ workflows:
     environment:
       node: 20
       xcode: latest
+      ios_signing:
+        distribution_type: development
     scripts:
       - name: Install dependencies
         script: |
           npm install
-      - name: Create simple build
+      - name: Build web app
         script: |
-          mkdir -p dist/public
-          cp -r client/* dist/public/
-          cd dist/public && npm install
-      - name: Setup Capacitor
-        script: |
-          npx cap add ios
+          npx vite build
       - name: Sync iOS
         script: |
           npx cap sync ios
+      - name: Build iOS app
+        script: |
+          xcode-project build-ipa \
+            --workspace ios/App/App.xcworkspace \
+            --scheme App
     artifacts:
       - build/ios/ipa/*.ipa
+      - ios/App/build/Build/Products/**/*.ipa
